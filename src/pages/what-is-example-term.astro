@@ -1,0 +1,60 @@
+---
+// Explainer page pattern: one page per term people search for ("What is X?").
+// Rename the file to the term, e.g. what-is-cpq.astro. The definition comes first, in plain words,
+// so the first paragraph alone answers the question and can be quoted by a search engine or assistant.
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+
+const path = '/what-is-example-term/';
+const url = `${site.url}${path}`;
+const title = 'What is CPQ? Explained in plain words';
+const description = 'CPQ explained without jargon: what configure, price, quote software does, how it differs from a spreadsheet, where its limits are, and how to start.';
+const faq = [
+  { q: 'What is CPQ in one sentence?', a: 'CPQ is software that guides a salesperson through configuring a product, applies the pricing rules and produces a quote.' },
+  { q: 'Who needs CPQ?', a: 'Replace: say plainly who benefits and who does not.' },
+];
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'Article', '@id': `${url}#article`, headline: title, description, inLanguage: site.lang, mainEntityOfPage: url, author: { '@id': `${site.url}/#org` }, publisher: { '@id': `${site.url}/#org` } },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+];
+---
+<Base title={title} description={description} path={path} jsonLd={jsonLd}>
+  <header>
+    <p class="label">Explained simply</p>
+    <h1>What is CPQ?</h1>
+    <p class="lead">CPQ is software that guides a salesperson through configuring a product, applies the pricing rules and produces a quote. Replace this with your own two-sentence definition.</p>
+  </header>
+
+  <section aria-labelledby="diff-h">
+    <h2 id="diff-h">How it differs from what you use today</h2>
+    <div class="table full">
+      <table>
+        <thead><tr><th></th><th>Spreadsheet</th><th>CPQ</th></tr></thead>
+        <tbody>
+          <tr><th>Who can price a quote</th><td>The person who built the sheet</td><td>Anyone on the team</td></tr>
+          <tr><th>Replace: criterion</th><td>Replace</td><td>Replace</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="ex-h">
+    <h2 id="ex-h">Examples</h2>
+    <p>Replace: two or three concrete examples, each linking to its case page.</p>
+  </section>
+
+  <section aria-labelledby="limits-h">
+    <h2 id="limits-h">Where the limits are</h2>
+    <p>Replace: what the thing cannot do. Stating limits is what makes the page credible, to readers and to assistants.</p>
+  </section>
+
+  <section aria-labelledby="faq-h">
+    <h2 id="faq-h">Frequent questions</h2>
+    <dl class="faq">{faq.map(({ q, a }) => <div><dt>{q}</dt><dd>{a}</dd></div>)}</dl>
+  </section>
+
+  <section class="cta" aria-labelledby="cta-h">
+    <h2 id="cta-h">Replace: the next step</h2>
+    <a class="btn" href={site.cta.href}>{site.cta.label}</a>
+  </section>
+</Base>

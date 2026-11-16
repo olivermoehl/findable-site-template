@@ -1,0 +1,54 @@
+name: Build
+
+# Builds the site on every push and fails if a title or description is out of range.
+# Deployment depends on your host (see docs/05-deploy.md) and is not part of this file.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist
+
+  # Optional: report all addresses to IndexNow after a deploy.
+  # Runs only on main and only when the repository variables SITE_HOST (e.g. example.com)
+  # and INDEXNOW_KEY are set. The key file must be served at https://SITE_HOST/INDEXNOW_KEY.txt.
+  indexnow:
+    needs: build
+    if: github.ref == 'refs/heads/main' && vars.SITE_HOST != '' && vars.INDEXNOW_KEY != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SITE_HOST: ${{ vars.SITE_HOST }}
+      INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY }}
+    steps:
+      - name: Wait until the host has published the new version
+        run: sleep 420
+      - name: Report addresses
+        run: |
+          set -euo pipefail
+          URLS=$(curl -fsS "https://${SITE_HOST}/sitemap-0.xml" | grep -o '<loc>[^<]*' | sed 's/<loc>//' | jq -R . | jq -s .)
+          echo "IndexNow: reporting $(echo "$URLS" | jq length) addresses:"; echo "$URLS" | jq -r '.[]'
+          jq -n --argjson u "$URLS" --arg h "$SITE_HOST" --arg k "$INDEXNOW_KEY" \
+            '{host:$h,key:$k,keyLocation:("https://"+$h+"/"+$k+".txt"),urlList:$u}' > body.json
+          curl -fsS -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' \
+            --data @body.json -o /dev/null -w 'IndexNow: HTTP %{http_code}\n'

@@ -1,0 +1,75 @@
+---
+// Homepage. Order follows the reader's questions: Is this for me? What do they do? Does it work?
+// Can I trust them? What next? Each section answers one question and can be quoted on its own.
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${site.url}/#org`,
+  name: site.name,
+  legalName: site.legalName,
+  url: site.url,
+  description: site.entity,
+  email: site.contact.email,
+  founder: { '@type': 'Person', name: site.founder.name, jobTitle: site.founder.jobTitle, url: site.founder.url },
+  address: { '@type': 'PostalAddress', streetAddress: site.address.street, postalCode: site.address.postalCode, addressLocality: site.address.city, addressCountry: site.address.country },
+  areaServed: site.areaServed,
+  knowsAbout: site.knowsAbout,
+  ...(site.sameAs.length ? { sameAs: site.sameAs } : {}),
+};
+const website = { '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${site.url}/#website`, url: site.url, name: site.name, inLanguage: site.lang, publisher: { '@id': `${site.url}/#org` } };
+const faq = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: site.faq.map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) };
+---
+<Base title={`${site.name}: quoting tools for manufacturers`} path="/" jsonLd={[org, website, faq]}>
+  <header>
+    <p class="label">Replace: your claim in a few words</p>
+    <h1>Replace: the outcome your buyer wants, in their words.</h1>
+    <!-- The definition sentence, word for word from site.ts. Do not paraphrase it here. -->
+    <p class="lead">{site.entity}</p>
+    <p><a class="btn" href={site.cta.href}>{site.cta.label}</a></p>
+  </header>
+
+  <section id="problems" aria-labelledby="problems-h">
+    <h2 id="problems-h">Does this sound familiar?</h2>
+    <!-- Three or four situations in the buyer's own words. No solution yet. -->
+    <ul class="rows">
+      <li>Replace: a concrete situation, for example "A quote takes a week because only one person knows the price list."</li>
+      <li>Replace: a second situation.</li>
+      <li>Replace: a third situation.</li>
+    </ul>
+  </section>
+
+  <section id="approach" aria-labelledby="approach-h">
+    <h2 id="approach-h">How we work</h2>
+    <!-- Two or three principles. Define every technical term the first time it appears and link to its page. -->
+    <p>Replace: what you do first, and why. Introduce your key term with a plain definition, then link to <a href="/what-is-example-term/">its own page</a>.</p>
+  </section>
+
+  <section id="results" aria-labelledby="results-h">
+    <h2 id="results-h">Results</h2>
+    <!-- Proof. Put the figure in the heading of each card and say where the number comes from. -->
+    <div class="cards full">
+      <article class="card">
+        <p class="label">Machine building</p>
+        <h3>Replace: task and measured result in one line</h3>
+        <p>Replace: two sentences on what changed, with the source of the number.</p>
+        <p><a href="/cases/example-case/">Read the case</a></p>
+      </article>
+    </div>
+  </section>
+
+  <section id="faq" aria-labelledby="faq-h">
+    <h2 id="faq-h">Frequent questions</h2>
+    <dl class="faq">
+      {site.faq.map(({ q, a }) => <div><dt>{q}</dt><dd>{a}</dd></div>)}
+    </dl>
+  </section>
+
+  <section class="cta" aria-labelledby="cta-h">
+    <h2 id="cta-h">Replace: the next step</h2>
+    <p>Replace: what happens in the first conversation and what the visitor knows afterwards.</p>
+    <a class="btn" href={site.cta.href}>{site.cta.label}</a>
+  </section>
+</Base>

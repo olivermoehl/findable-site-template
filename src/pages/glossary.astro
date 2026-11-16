@@ -1,0 +1,30 @@
+---
+// Glossary: each term has an anchor (/glossary/#id) and is emitted as DefinedTerm structured data.
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+import { glossary } from '../data/glossary';
+
+const path = '/glossary/';
+const url = `${site.url}${path}`;
+const title = `Glossary | ${site.name}`;
+const description = 'Short definitions of the terms used on this site, written so that each one can be understood and quoted without the rest of the page.';
+const jsonLd = [{
+  '@context': 'https://schema.org', '@type': 'DefinedTermSet', '@id': `${url}#terms`, name: title, inLanguage: site.lang,
+  hasDefinedTerm: glossary.map((t) => ({ '@type': 'DefinedTerm', '@id': `${url}#${t.id}`, name: t.term, description: t.text, inDefinedTermSet: `${url}#terms` })),
+}];
+---
+<Base title={title} description={description} path={path} jsonLd={jsonLd}>
+  <header>
+    <h1>Glossary</h1>
+    <p class="lead">The terms used on this site, each explained in a few plain sentences.</p>
+  </header>
+  <section>
+    {glossary.map((t) => (
+      <article id={t.id} style="display:grid;gap:8px;padding-block:16px;border-top:1px solid var(--line)">
+        <h2>{t.term}</h2>
+        <p>{t.text}</p>
+        {t.more && <p><a href={t.more.href}>{t.more.label}</a></p>}
+      </article>
+    ))}
+  </section>
+</Base>

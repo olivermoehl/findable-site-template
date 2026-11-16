@@ -1,0 +1,43 @@
+---
+// Case page pattern: starting point, what was built, what changed. One case per page, so each
+// case has its own address, title and description and can be found for its own search terms.
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+
+const path = '/cases/example-case/';
+const url = `${site.url}${path}`;
+const title = 'Case: quoting time cut at a machine builder';
+const description = 'How a machine builder with 120 employees cut quoting time: the starting point, what was built, and the measured result with its source.';
+const jsonLd = [{ '@context': 'https://schema.org', '@type': 'Article', '@id': `${url}#article`, headline: title, description, inLanguage: site.lang, mainEntityOfPage: url, publisher: { '@id': `${site.url}/#org` } }];
+---
+<Base title={title} description={description} path={path} jsonLd={jsonLd}>
+  <header>
+    <p class="label">Case · Machine building</p>
+    <h1>Replace: task and measured result in one line.</h1>
+    <p class="lead">Replace: who the client is (anonymised if needed), what they did, and who still decides.</p>
+  </header>
+
+  <section aria-labelledby="start-h">
+    <h2 id="start-h">The task</h2>
+    <p>Replace: the situation before, described neutrally. Never make the client look bad.</p>
+  </section>
+
+  <section aria-labelledby="built-h">
+    <h2 id="built-h">What was built</h2>
+    <ul class="rows">
+      <li>Replace: step one.</li>
+      <li>Replace: step two.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="result-h">
+    <h2 id="result-h">The result</h2>
+    <p>Replace: the figure, the period it was measured over, and who measured it. Write numbers so a reader can check them: "1.5 to 2 days of about ten" is "15 to 20 percent".</p>
+    <p>Only state what is in use today. Planned features do not belong on this page.</p>
+  </section>
+
+  <section class="cta" aria-labelledby="cta-h">
+    <h2 id="cta-h">Replace: the next step</h2>
+    <a class="btn" href={site.cta.href}>{site.cta.label}</a>
+  </section>
+</Base>

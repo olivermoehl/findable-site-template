@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+---
+<Base title="Imprint | Example Co" description="Legal notice for Example Co: company name, address, contact details and the persons responsible. Replace this with your own legally required text." path="/imprint/">
+  <header><h1>Imprint</h1></header>
+  <section>
+    <p>{site.legalName}, {site.address.street}, {site.address.postalCode} {site.address.city}</p>
+    <p>Replace with the legal notice your jurisdiction requires. This template is not legal advice.</p>
+  </section>
+</Base>

@@ -1,0 +1,61 @@
+---
+// Every page goes through this layout. It guarantees the things a crawler needs on each page:
+// one title, one description, a canonical URL, structured data, and real links in plain HTML.
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;          // max 60 characters, checked at build time
+  description?: string;   // 110-160 characters, checked at build time
+  path?: string;          // the page's own path, used for the canonical URL
+  jsonLd?: object[];      // structured data blocks for this page
+  noindex?: boolean;
+}
+const { title, description = site.description, path = '/', jsonLd = [], noindex = false } = Astro.props;
+const canonical = new URL(path, site.url).href;
+const updated = new Date().toISOString().slice(0, 10);
+---
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="dc.modified" content={updated} />
+    {jsonLd.map((block) => <script type="application/ld+json" set:html={JSON.stringify(block)} />)}
+  </head>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+    <header class="head">
+      <div class="wrap head__inner">
+        <a class="head__name" href="/">{site.name}</a>
+        <nav aria-label="Main">
+          {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+          <a class="btn" href={site.cta.href}>{site.cta.label}</a>
+        </nav>
+      </div>
+    </header>
+    <main id="content" class="wrap">
+      <slot />
+    </main>
+    <footer class="foot">
+      <div class="wrap foot__inner">
+        <span>{site.legalName}</span>
+        <a href="/glossary/">Glossary</a>
+        <a href="/imprint/">Imprint</a>
+        <a href="/privacy/">Privacy</a>
+        <span>Updated {updated}</span>
+      </div>
+    </footer>
+  </body>
+</html>
