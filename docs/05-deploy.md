@@ -12,6 +12,6 @@ Set `site.url` in `src/data/site.ts` to the real domain before the first public 
 ## Telling search engines about changes
 
 - **Google:** submit the sitemap once in Search Console. For an important new page, request indexing by hand in the URL inspection tool. Google does not use IndexNow.
-- **Bing and others:** [IndexNow](https://www.indexnow.org) lets you report changed addresses directly. Generate a key, serve it as `/<key>.txt` from `public/`, and post the sitemap's addresses after each deploy. `.github/workflows/build.yml` contains an optional job for this; it runs only when the repository variables `SITE_HOST` and `INDEXNOW_KEY` are set. Log the list of reported addresses so you can check what was sent.
+- **Bing and others:** [IndexNow](https://www.indexnow.org) lets you report changed addresses directly. Generate a key, serve it as `/<key>.txt` from `public/`, and post the sitemap's addresses after each deploy. `.github/workflows/build.yml` contains an optional job for this; it runs only when the repository variables `SITE_HOST` and `INDEXNOW_KEY` are set. Log the list of reported addresses so you can check what was sent. Treat the key as confidential. If your site's repository is public, do not commit the key file; create it during the build from a repository secret instead.
 
 If the host takes a few minutes to publish, wait before reporting, otherwise the engine fetches the old version.
