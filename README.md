@@ -10,7 +10,7 @@ Hand this repository to an AI coding agent together with your answers to the onb
 
 Most company websites are built to look good to the person who commissioned them. This one is built so that a machine reading the raw HTML understands who the company is, what it does and for whom, and so that a person who lands on any single page understands the same.
 
-The approach was worked out while building [watchitwork.de](https://watchitwork.de), which runs on this structure. That site is the live example. This repository contains none of its content, only the method.
+The approach was worked out while building a company website that runs on this structure. This repository contains none of its content, only the method.
 
 ## What you get
 
@@ -53,7 +53,7 @@ The site ships no JavaScript, sets no cookies and loads nothing from third parti
 
 ## What this template does not promise
 
-It does not promise rankings. The rules here are the ones used on the live example, and each one has a stated reason, but search engines and assistants decide for themselves what they show. Results depend on your market, your content and how consistently you run the loop in `docs/04-measure-and-improve.md`. Measured results from the live example will be added under `measurement/` as they come in.
+It does not promise rankings. The rules here are the ones used on that website, and each one has a stated reason, but search engines and assistants decide for themselves what they show. Results depend on your market, your content and how consistently you run the loop in `docs/04-measure-and-improve.md`.
 
 ## License
 
