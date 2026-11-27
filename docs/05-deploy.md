@@ -5,7 +5,7 @@ The build produces a folder of static files (`dist/`). Any static host can serve
 ## Options
 
 - **A static hosting service** (GitHub Pages, Cloudflare Pages, Netlify and similar): connect the repository and set the build command to `npm run build` and the output folder to `dist`.
-- **Your own server:** let the server fetch the built files instead of giving the build pipeline access to the server. The live example builds in GitHub Actions, publishes the result to a separate branch, and the server pulls that branch on a timer. No server credentials are stored with the code host.
+- **Your own server:** let the server fetch the built files instead of giving the build pipeline access to the server. The site this template came from builds in GitHub Actions, publishes the result to a separate branch, and the server pulls that branch on a timer. No server credentials are stored with the code host.
 
 Set `site.url` in `src/data/site.ts` to the real domain before the first public build; canonical URLs, the sitemap and `/llms.txt` depend on it.
 

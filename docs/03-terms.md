@@ -5,7 +5,7 @@ The words on the site decide which searches it can match. This step finds the wo
 ## What you need
 
 - The phrases from the onboarding brief (question 7).
-- A source of search data. A keyword data service with an API is the most convenient, because an agent can query it directly. [DataForSEO](https://dataforseo.com) is one such service (paid, per request); the live example used it. Free alternatives are Google Keyword Planner, Bing Webmaster Tools keyword research and, once the site is live, your own Search Console queries.
+- A source of search data. A keyword data service with an API is the most convenient, because an agent can query it directly. [DataForSEO](https://dataforseo.com) is one such service (paid, per request); the site this template came from used it. Free alternatives are Google Keyword Planner, Bing Webmaster Tools keyword research and, once the site is live, your own Search Console queries.
 
 No service is required to start. Without one, use the buyers' phrases as they are and let the first Search Console data correct you.
 
