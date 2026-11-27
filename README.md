@@ -55,6 +55,8 @@ The site ships no JavaScript, sets no cookies and loads nothing from third parti
 
 It does not promise rankings. The rules here are the ones used on that website, and each one has a stated reason, but search engines and assistants decide for themselves what they show. Results depend on your market, your content and how consistently you run the loop in `docs/04-measure-and-improve.md`.
 
+It is also not legal advice. The imprint and privacy pages are placeholders; what they must contain depends on your jurisdiction and on what you add to the site.
+
 ## License
 
 MIT, see [`LICENSE`](LICENSE). Provided as is, without support. The license covers the code and documentation in this repository. It does not cover the name, logo or content of any site built with it.
